@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/presentation/res/dimen/dimens.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -35,11 +36,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       // Next, initialize the controller. This returns a Future.
       _initializeControllerFuture = _controller.initialize();
-    }
-    else if (state == AppLifecycleState.paused) {
+    } else if (state == AppLifecycleState.paused) {
       _controller.dispose();
-    }
-    else if (state == AppLifecycleState.inactive) {
+    } else if (state == AppLifecycleState.inactive) {
       _controller.dispose();
     }
   }
@@ -70,22 +69,31 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
+      appBar: AppBar(
+        title: const Text(
+          'Chụp ảnh xác nhận đơn hàng',
+          style: TextStyle(fontSize: fontLG),
+        ),
+      ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+      body: SizedBox(
+        height: double.maxFinite,
+        child: FutureBuilder<void>(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              // If the Future is complete, display the preview.
+              return CameraPreview(_controller);
+            } else {
+              // Otherwise, display a loading indicator.
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -131,10 +139,25 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
+      appBar: AppBar(
+        title: const Text(
+          'Chụp ảnh xác nhận đơn hàng',
+          style: TextStyle(fontSize: fontLG),
+        ),
+      ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Column(
+        children: [
+          Expanded(child: Image.file(File(imagePath))),
+          ElevatedButton(
+              onPressed: () {},
+              child: const Text(
+                'Gửi đến cửa hàng',
+                style: TextStyle(fontSize: fontLG),
+              )),
+        ],
+      ),
     );
   }
 }

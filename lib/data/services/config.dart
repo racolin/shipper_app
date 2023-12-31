@@ -27,10 +27,10 @@ class Environment {
     _devInstance ??= Environment._(
         base: 'api/v2/',
         url: Platform.isAndroid
-            ? 'http://192.168.2.8:80/'
-            : 'http://127.0.0.1:80/',
+            ? 'http://192.168.2.8/'
+            : 'http://127.0.0.1/',
         ws: Platform.isAndroid
-            ? 'http://192.168.2.8:80/shipper'
+            ? 'http://192.168.2.8/shipper'
             : 'http://localhost/shipper');
     return _devInstance!;
   }

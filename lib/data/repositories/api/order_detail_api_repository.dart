@@ -29,7 +29,62 @@ class OrderDetailApiRepository extends OrderDetailRepository {
       var raw = RawSuccessModel.fromMap(res.data);
       return ResponseModel<OrderDetailModel>(
         type: ResponseModelType.success,
-        data: OrderDetailModel.fromMap(raw.data),
+        data: OrderDetailModel.fromMap({
+          "receiver": {
+            "name": "Tín",
+            "phone": "+84931592381",
+            "address": "01 Võ Văn Ngân, Linh Chiểu, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+            "lat": 10.8506324,
+            "lng": 106.7719131
+          },
+          "store": {
+            "name": "TCC Hoàng Diệu 2",
+            "address": "322 Nguyễn Thị Thập, Phú Thuận, Quận 7, Hồ Chí ",
+            "phone": "02821201717",
+            "lat": 10.8526199,
+            "lng": 106.7450425
+          },
+          "code": "O2SFM5EDCW",
+          "id": "658889ecbdc3d5a9569042ec",
+          "items": [
+            {
+              "id": "644cdd386b1ed80d5ae1cad8",
+              "name": "Cà phê đen đá",
+              "amount": 1,
+              "note": "Vừa"
+            },
+            {
+              "id": "644cdd386b1ed80d5ae1cad8",
+              "name": "Cà phê sữa",
+              "amount": 3,
+              "note": "Vừa"
+            }
+          ],
+          "quantity": 4,
+          "totalPrice": 135000,
+          "shippingFee": 25000,
+          "paymentType": 0,
+          "timeLog": [
+            {
+              "time": 1703447020336,
+              "title": "Chờ thanh toán",
+              "description": "Thực hiện thanh toán để hoàn thành đặt đơn hàng"
+            },
+            {
+              "time": 1703447564284,
+              "title": "Thanh toán thành công"
+            },
+            {
+              "time": 1703447816766,
+              "title": "Đã tìm thấy tài xế",
+              "description": "Đơn hàng được nhận bởi tài xế Nguyễn Quang Vinh - SĐT: 0347070634"
+            }
+          ],
+          "review": null,
+          "createdAt": 1703447020349,
+          "shipDistance": 2946.0520751615595
+        }),
+        // OrderDetailModel.fromMap(raw.data),
       );
     } on DioError catch (ex) {
       if (ex.error is AppMessage) {
