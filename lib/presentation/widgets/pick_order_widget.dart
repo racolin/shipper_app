@@ -46,9 +46,7 @@ class PickOrderWidget extends StatelessWidget {
                     const SizedBox(height: spaceXS),
                     Text(
                       numberToCurrency(
-                        order.paymentType == 0
-                            ? order.totalPrice
-                            : order.shippingFee,
+                        order.shipperIncome,
                         'đ',
                       ),
                       style: const TextStyle(

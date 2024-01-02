@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shipper_app/business_logic/cubits/setting_cubit.dart';
 import 'package:shipper_app/presentation/app_router.dart';
 import 'package:shipper_app/presentation/pages/home_body.dart';
 import 'package:shipper_app/presentation/pages/profile_page.dart';
 import 'package:shipper_app/presentation/res/dimen/dimens.dart';
 import 'package:shipper_app/presentation/screens/delivering_order_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,7 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     context.read<SettingCubit>().checkDelivering().then(
       (res) {
+        // print('res?.orders.length');
+        // print(res?.orders.length);
         if (res != null) {
+          // print(res?.orders.length);
           Navigator.push(
             context,
             MaterialPageRoute(

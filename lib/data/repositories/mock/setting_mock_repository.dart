@@ -6,7 +6,7 @@ import 'package:shipper_app/data/models/response_model.dart';
 
 import '../../../business_logic/repositories/setting_repository.dart';
 
-class SettingApiRepository extends SettingRepository {
+class SettingMockRepository extends SettingRepository {
   @override
   Future<ResponseModel<bool>> changeNotify() {
     // TODO: implement changeNotify
@@ -20,7 +20,8 @@ class SettingApiRepository extends SettingRepository {
   }
 
   @override
-  Future<ResponseModel<MapEntry<int, List<OrderModel>>>> getListOrder({int? page, int? limit, int? time}) {
+  Future<ResponseModel<MapEntry<int, List<OrderModel>>>> getListOrder(
+      {int? page, int? limit, int? time}) {
     // TODO: implement getListOrder
     throw UnimplementedError();
   }
@@ -38,14 +39,25 @@ class SettingApiRepository extends SettingRepository {
   }
 
   @override
-  Future<ResponseModel<bool>> updateOrderState({required String orderId, int? status}) {
+  Future<ResponseModel<bool>> evidence({
+    required String orderId,
+    int? status,
+    required String evidence,
+  }) {
     // TODO: implement updateOrderState
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel<bool>> updateProfile({required String lastName, required String firstName}) {
+  Future<ResponseModel<bool>> updateProfile(
+      {required String lastName, required String firstName}) {
     // TODO: implement updateProfile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseModel<bool>> updateStatus({required String orderId, int? status}) {
+    // TODO: implement updateStatus
     throw UnimplementedError();
   }
 }

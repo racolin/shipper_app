@@ -14,10 +14,12 @@ class OrderModel {
   final int totalPrice;
   final int shippingFee;
   final int paymentType;
+  final String? status;
   final OrderReceiverModel receiver;
   final OrderStoreModel store;
-  final double shipDistance;
+  final int shipDistance;
   final double? pickDistance;
+  final int shipperIncome;
   final DateTime createAt;
 
   const OrderModel({
@@ -29,6 +31,8 @@ class OrderModel {
     required this.receiver,
     required this.store,
     this.pickDistance,
+    this.status,
+    required this.shipperIncome,
     required this.shipDistance,
     required this.createAt,
   });
@@ -42,7 +46,9 @@ class OrderModel {
       'paymentType': paymentType,
       'receiver': receiver,
       'store': store,
+      'status': status,
       'shipDistance': shipDistance,
+      'shipperIncome': shipperIncome,
       'pickDistance': pickDistance,
       'createAt': createAt.millisecondsSinceEpoch,
     };
@@ -55,10 +61,12 @@ class OrderModel {
       totalPrice: map['totalPrice'] as int,
       shippingFee: map['shippingFee'] as int,
       paymentType: map['paymentType'] as int,
-      pickDistance: map['pickDistance'],
+      status: map['status'],
+      shipperIncome: map['shipperIncome'] as int,
+      pickDistance: (map['pickDistance'] as num?)?.toDouble(),
       receiver:  OrderReceiverModel.fromMap(map['receiver']),
       store: OrderStoreModel.fromMap(map['store']),
-      shipDistance: (map['shipDistance'] is double) ? map['shipDistance'] : (map['shipDistance'] as int).toDouble(),
+      shipDistance: map['shipDistance'] as int,
       createAt: map['createAt'] != null ? DateTime.fromMillisecondsSinceEpoch(map['createAt']) : DateTime.now(),
     );
   }

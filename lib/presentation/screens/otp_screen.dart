@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shipper_app/business_logic/cubits/account_cubit.dart';
 import 'package:shipper_app/presentation/app_router.dart';
 import 'package:shipper_app/supports/convert.dart';
 
@@ -156,11 +157,13 @@ class _OtpScreenState extends State<OtpScreen> {
                         },
                       );
                     } else {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        AppRouter.home,
-                            (route) => false,
-                      );
+                      // print(122121);
+                      context.read<AccountCubit>().login();
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //   context,
+                      //   AppRouter.home,
+                      //       (route) => false,
+                      // );
                     }
                   }
                 },

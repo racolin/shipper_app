@@ -59,7 +59,7 @@ class PickOrderDetailScreen extends StatelessWidget {
                     const Divider(height: 1, color: Colors.grey),
                     _getRowItemWidget(
                       'Phí ship:',
-                      '${numberToCurrency(model.shippingFee, 'đ')}(${meterToString(model.shipDistance.toInt())})',
+                      '${numberToCurrency(model.shipperIncome, 'đ')}(${meterToString(model.shipDistance.toInt())})',
                     ),
                     const Divider(height: 1, color: Colors.grey),
                     _getRowItemExpandWidget('Người nhận:', [

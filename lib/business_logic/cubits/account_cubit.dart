@@ -13,6 +13,8 @@ class AccountCubit extends Cubit<AccountState> {
     emit(AccountLoading());
     _repository.isLogin().then((res) {
       if (res.type == ResponseModelType.success) {
+        // print(res.data);
+        // print('res.data111');
         emit(AccountLoaded(
           isLogin: res.data,
         ));
@@ -25,12 +27,20 @@ class AccountCubit extends Cubit<AccountState> {
   void logout() async {
     var res = await _repository.logout();
     if (res.type == ResponseModelType.success) {
+      // print('state--11--11');
+      // print((state as AccountLoaded).isLogin);
       emit(AccountLoaded(
         isLogin: false,
       ));
     } else {
       emit(AccountFailure(message: res.message));
     }
+  }
+
+  void login() {
+    emit(AccountLoaded(
+      isLogin: true,
+    ));
   }
 
   // base method: return response model, use to avoid repeat code.

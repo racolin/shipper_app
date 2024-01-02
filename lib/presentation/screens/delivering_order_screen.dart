@@ -20,10 +20,19 @@ class DeliveringOrderScreen extends StatefulWidget {
 
 class _DeliveringOrderScreenState extends State<DeliveringOrderScreen> {
   late DeliveringModel delivering;
+  bool started = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
     delivering = ModalRoute.of(context)?.settings.arguments as DeliveringModel;
+    if (delivering.orders[0].status == 'delivering') {
+      started = true;
+    }
     super.didChangeDependencies();
   }
 
@@ -138,29 +147,57 @@ class _DeliveringOrderScreenState extends State<DeliveringOrderScreen> {
                 //   },
                 //   child: const Text('Hoàn thành đơn'),
                 // ),
-                ElevatedButton(
-                  onPressed: () async {
-                    // Đảm bảo các plugin service được khởi tạo trước khi chạy App
-                    WidgetsFlutterBinding.ensureInitialized();
+                if (started)
+                  ElevatedButton(
+                    onPressed: () async {
+                      // Đảm bảo các plugin service được khởi tạo trước khi chạy App
+                      WidgetsFlutterBinding.ensureInitialized();
 
-                    // Lấy ra các danh sách camera có sẵn trên thiết bị của user
-                    final cameras = await availableCameras();
+                      // Lấy ra các danh sách camera có sẵn trên thiết bị của user
+                      final cameras = await availableCameras();
 
-                    // Lấy một camera cụ thể từ danh sách cách camera
-                    final firstCamera = cameras.first;
-                    if (mounted) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return TakePictureScreen(camera: firstCamera);
-                          },
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Chụp ảnh giao hàng'),
-                ),
+                      // Lấy một camera cụ thể từ danh sách cách camera
+                      final firstCamera = cameras.first;
+                      if (mounted) {
+                        var file = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CapturePictureScreen(camera: firstCamera);
+                            },
+                          ),
+                        );
+                        if (mounted && file is String) {
+                          context
+                              .read<SettingCubit>()
+                              .finishOrder(
+                                delivering.orders[0].id,
+                                file,
+                              )
+                              .then((res) {
+                            if (res) {
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
+                      }
+                    },
+                    child: const Text('Chụp ảnh và hoàn thành đơn'),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<SettingCubit>()
+                          .startOrder(delivering.orders[0].id)
+                          .then((value) {
+                        setState(() {
+                          started = value;
+                        });
+                      });
+                    },
+                    child: const Text('Đã nhận đơn từ cửa hàng'),
+                  ),
                 const SizedBox(height: dimMD),
               ],
             ),

@@ -54,7 +54,7 @@ class AppConfig {
 class ApiRouter {
   // Google Places API Key
   static const String googlePlacesApiKey =
-      'AIzaSyBA-mmMQIJZu59xSv_gtjD_ZKHqaKLuAmE';
+      'AIzaSyAl08v6TizYX1xbG21xGCaRmtI6yT8hxwM';
 
   // Auth
   static const String authInfo = '/shipper/auth/info';
@@ -71,6 +71,7 @@ class ApiRouter {
   static String detailOrder(String orderId) => '/shipper/order/$orderId/detail';
   static const String currentOrder = '/shipper/order/current';
   static const String listOrder = '/shipper/order/list';
+  static String evidence(String orderId) => '/shipper/order/$orderId/evidence';
 }
 
 class SocketRouter {

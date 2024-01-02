@@ -27,39 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
           margin: const EdgeInsets.only(top: 56),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    child: Image.asset(
-                      'assets/images/background_auth.png',
-                      height: 360,
-                      width: double.maxFinite,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 12,
-                    right: 12,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (Navigator.canPop(context)) {
-                          Navigator.pop(context);
-                        } else {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            AppRouter.home,
-                            (route) => false,
-                          );
-                        }
-                      },
-                      child: const Icon(
-                        Icons.cancel,
-                        color: Colors.grey,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                ],
+              ClipRRect(
+                child: Image.asset(
+                  'assets/images/background_auth.png',
+                  height: 360,
+                  width: double.maxFinite,
+                  fit: BoxFit.cover,
+                ),
               ),
               Container(
                 padding: const EdgeInsets.all(spaceMD),

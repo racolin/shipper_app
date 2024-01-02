@@ -6,10 +6,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:dio/dio.dart';
 import 'package:shipper_app/business_logic/repositories/pick_order_repository.dart';
 import 'package:shipper_app/data/models/order_error_model.dart';
-import 'package:shipper_app/data/models/order_model.dart';
 import 'package:shipper_app/data/services/api_client.dart';
 import 'package:shipper_app/data/services/secure_storage.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../../exception/app_message.dart';
 import '../../../presentation/res/strings/values.dart';
@@ -25,7 +23,7 @@ class PickOrderSocketRepository extends PickOrderRepository {
   final _dioAuth = ApiClient.dioAuth;
   final _socket = IO.io(
       Environment.env().ws,
-      OptionBuilder().setTransports(['websocket'])
+      IO.OptionBuilder().setTransports(['websocket'])
           .build());
 
   TokenModel? token;
@@ -40,16 +38,16 @@ class PickOrderSocketRepository extends PickOrderRepository {
   PickOrderSocketRepository() {
     // Lấy access token và tiến hành xác thực socket
     _storage.getToken().then((res) {
-      print('PickOrderSocketRepository: Connected2');
+      // print('PickOrderSocketRepository: Connected2');
       // Nếu lấy được token thì emit xác thực
       // Nếu không thì báo lỗi
       if (res.type == ResponseModelType.success) {
-        print('PickOrderSocketRepository: Connected3');
+        // print('PickOrderSocketRepository: Connected3');
         token = res.data;
 
         // Khi socket kết nối thì emit authen
         _socket.onConnect((dt) {
-          print('PickOrderSocketRepository: Connected');
+          // print('PickOrderSocketRepository: Connected');
           _socket.emit(SocketRouter.emitAuthenticate, {
             'token': token!.accessToken,
           });
@@ -80,8 +78,8 @@ class PickOrderSocketRepository extends PickOrderRepository {
 
     // setup các stream
     _socket.on(SocketRouter.onNewOrder, (data) {
-      print('onNewOrder');
-      print(data);
+      // print('onNewOrder');
+      // print(data);
       try {
         var res = OrderModel.fromMap(data);
         _controllerNewOrder.sink.add(res);
@@ -110,8 +108,8 @@ class PickOrderSocketRepository extends PickOrderRepository {
     });
 
     _socket.on(SocketRouter.onPickOrderError, (data) {
-      print('onPickOrderError');
-      print(data);
+      // print('onPickOrderError');
+      // print(data);
       try {
         var res = OrderErrorModel.fromMap(data);
         _controllerPickOrderError.sink.add(res);
@@ -126,8 +124,8 @@ class PickOrderSocketRepository extends PickOrderRepository {
     });
 
     _socket.on(SocketRouter.onPickOrderSuccess, (data) {
-      print('onPickOrderSuccess');
-      print(data);
+      // print('onPickOrderSuccess');
+      // print(data);
       var orderId = data['orderId'];
       if (orderId is String) {
         _controllerPickOrderSuccess.sink.add(orderId);
@@ -257,6 +255,7 @@ class PickOrderSocketRepository extends PickOrderRepository {
     _controllerPickOrderError.close();
     _controllerPickOrderSuccess.close();
     _controllerRemovePickedOrder.close();
+    _controllerError.close();
   }
 
   @override

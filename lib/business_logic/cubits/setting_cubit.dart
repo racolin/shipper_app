@@ -28,7 +28,7 @@ class SettingCubit extends Cubit<SettingState> {
             .getListOrder(
           page: 1,
           limit: 10,
-          time: 3,
+          time: 0,
         )
             .then((resMap) {
           if (resMap.type == ResponseModelType.success) {
@@ -104,13 +104,26 @@ class SettingCubit extends Cubit<SettingState> {
     return null;
   }
 
-  Future<bool> updateOrderStatus(String orderId) async {
-    var res = await _repository.updateOrderState(
+  Future<bool> finishOrder(String orderId, String evidence) async {
+    var res = await _repository.evidence(
       orderId: orderId,
+      evidence: evidence,
       status: 2,
     );
     if (res.type == ResponseModelType.success) {
       reloadProfile();
+      return res.data;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> startOrder(String orderId) async {
+    var res = await _repository.updateStatus(
+      orderId: orderId,
+      status: 1,
+    );
+    if (res.type == ResponseModelType.success) {
       return res.data;
     } else {
       return false;

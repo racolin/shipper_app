@@ -66,8 +66,8 @@ class _PickOrderScreenState extends State<PickOrderScreen> {
       ),
       body: BlocConsumer<PickOrderCubit, PickOrderState>(
         listener: (context, state) {
-          print('state.runtimeType');
-          print(state is PickOrderSuccess);
+          // print('state.runtimeType');
+          // print(state is PickOrderSuccess);
           if (state is PickOrderSuccess) {
             Navigator.pop(context, true);
           }

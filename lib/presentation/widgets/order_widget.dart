@@ -48,12 +48,7 @@ class OrderWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: spaceXS),
                   Text(
-                    numberToCurrency(
-                      order.paymentType == 0
-                          ? order.totalPrice
-                          : order.shippingFee,
-                      'đ',
-                    ),
+                    numberToCurrency(order.shipperIncome, 'đ'),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,

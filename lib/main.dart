@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shipper_app/business_logic/cubits/account_cubit.dart';
 import 'package:shipper_app/business_logic/cubits/geolocator_cubit.dart';
-import 'package:shipper_app/data/services/secure_storage.dart';
 
 import 'business_logic/states/account_state.dart';
 import 'data/repositories/storage/account_storage_repository.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<AccountCubit, AccountState>(
           builder: (context, state) {
             return MaterialApp(
-              key: ValueKey(state.runtimeType.toString()),
+              key: ValueKey(state.toString()),
               // localizationsDelegates: [LocalizationsDelegate],
               title: 'Shipper App',
               theme: ThemeData(

@@ -32,7 +32,13 @@ abstract class SettingRepository {
 
   Future<ResponseModel<DeliveringModel>> deliveringOrder();
 
-  Future<ResponseModel<bool>> updateOrderState({
+  Future<ResponseModel<bool>> evidence({
+    required String orderId,
+    required String evidence,
+    int? status,
+  });
+
+  Future<ResponseModel<bool>> updateStatus({
     required String orderId,
     int? status,
   });

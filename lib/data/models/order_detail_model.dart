@@ -1,20 +1,21 @@
 import 'package:shipper_app/data/models/order_model.dart';
 
-import 'order_model.dart';
-
 class OrderDetailModel extends OrderModel {
   final String code;
   final List<OrderTimeLogModel> timeLog;
   final OrderReviewModel? review;
   final List<OrderItemModel> items;
+  final String? shippedEvidence;
 
   const OrderDetailModel({
     required this.code,
     required this.timeLog,
     required this.items,
     this.review,
+    this.shippedEvidence,
     required super.id,
     required super.quantity,
+    super.pickDistance,
     required super.totalPrice,
     required super.shippingFee,
     required super.paymentType,
@@ -22,6 +23,7 @@ class OrderDetailModel extends OrderModel {
     required super.store,
     required super.shipDistance,
     required super.createAt,
+    required super.shipperIncome,
   });
 
   @override
@@ -36,9 +38,11 @@ class OrderDetailModel extends OrderModel {
       'totalPrice': totalPrice,
       'shippingFee': shippingFee,
       'paymentType': paymentType,
+      'pickDistance': pickDistance,
       'receiver': receiver,
       'store': store,
       'shipDistance': shipDistance,
+      'shippedEvidence': shippedEvidence,
       'createAt': createAt.millisecondsSinceEpoch,
     };
   }
@@ -53,11 +57,14 @@ class OrderDetailModel extends OrderModel {
       items: (map['items'] as List).map((e) => OrderItemModel.fromMap(e)).toList(),
       quantity: map['quantity'] as int,
       totalPrice: map['totalPrice'] as int,
+      pickDistance: map['pickDistance'],
+      shipperIncome: map['shipperIncome'] as int,
       shippingFee: map['shippingFee'] as int,
       paymentType: map['paymentType'] as int,
+      shippedEvidence: map['shippedEvidence'],
       receiver:  OrderReceiverModel.fromMap(map['receiver']),
       store: OrderStoreModel.fromMap(map['store']),
-      shipDistance: (map['shipDistance'] is double) ? map['shipDistance'] : (map['shipDistance'] as int).toDouble(),
+      shipDistance: (map['shipDistance'] as num).toInt(),
       createAt: map['createAt'] == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(map['createAt']),
     );
   }

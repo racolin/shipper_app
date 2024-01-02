@@ -78,7 +78,7 @@ class GeolocatorCubit extends Cubit<GeolocatorState> {
     var pos = await Geolocator.getCurrentPosition();
     emit(state.copyWith(latLng: LatLng(pos.latitude, pos.longitude)));
     _storage.persistLatLng(LatLng(pos.latitude, pos.longitude));
-    print(LatLng(pos.latitude, pos.longitude).toJson());
+    // print(LatLng(pos.latitude, pos.longitude).toJson());
     return null;
   }
 
